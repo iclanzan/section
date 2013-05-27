@@ -36,7 +36,6 @@ module.exports = function(grunt) {
 
       _ = grunt.util._,
       extend = _.extend,
-      // forEach = _.forEach,
       processTemplate = grunt.template.process,
       file = grunt.file,
       readFile = file.read,
@@ -46,10 +45,6 @@ module.exports = function(grunt) {
       info = grunt.log.writeln;
 
   var supportedLanguages = Object.keys(hljs.LANGUAGES);
-
-  // function text(str) {
-  //   return _.clean(_.stripTags(marked(str)));
-  // }
 
   var is = function() {
     for(var i = 0, l = arguments.length; i < l; i++)
