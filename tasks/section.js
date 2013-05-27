@@ -59,8 +59,9 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('section', 'Generate website from Markdown files.', function() {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options(),
-    src = this.data.src,
-    dest = this.data.dest;
+        isBuild = this.target == 'build',
+        src = this.data.src,
+        dest = this.data.dest;
 
     if (options.highlight)
       marked.options({
@@ -216,7 +217,7 @@ module.exports = function(grunt) {
       }
     });
 
-    // Configure copy task
+    // Configure copy task.
     grunt.config.set('copy', {
       init: {
         expand: true,
@@ -231,8 +232,21 @@ module.exports = function(grunt) {
         dest: options.output
       }
     });
-console.log(grunt.config.get('copy'));
-    grunt.task.run('copy');
+
+    // Configure sass task.
+    grunt.config.set('sass', {
+      main: {
+        options: {
+          style: isBuild ? 'compressed' : 'expanded',
+          lineNumbers: !isBuild
+        },
+        src: options.style,
+        dest: path.join(options.output, 'style.css')
+      }
+    });
+
+    // Queue next tasks.
+    grunt.task.run('copy', 'sass');
 
   });
 };

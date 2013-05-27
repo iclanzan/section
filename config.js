@@ -55,25 +55,6 @@ module.exports = function( grunt ) {
       }
     },
 
-    sass: {
-      compressed: {
-        options: {
-          style: 'compressed'
-        },
-        src: style,
-        dest: path.join(options.output, 'style.css')
-      },
-
-      expanded: {
-        options: {
-          style: 'expanded',
-          lineNumbers: true
-        },
-        src: style,
-        dest: path.join(options.output, 'style.css')
-      }
-    },
-
     // HTML minification
     htmlmin: {
       main: {
@@ -130,7 +111,6 @@ module.exports = function( grunt ) {
   // Distribution build task.
   grunt.registerTask('build', 'Generates a production-ready version of your site.', [
     'section',
-    'sass:compressed',
     'htmlmin',
     'time',
     'notify:success'
@@ -139,7 +119,6 @@ module.exports = function( grunt ) {
   // Default task.
   grunt.registerTask('default', 'Generates and serves a development version of your site that is automatically regenerated when files change.', [
     'section',
-    'sass:expanded',
     'notify:success',
     'connect',
     'watch'

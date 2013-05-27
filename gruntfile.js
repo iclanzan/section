@@ -30,39 +30,24 @@ module.exports = function( grunt ) {
       }
     },
 
-    sass: {
-      compressed: {
-        options: {
-          style: 'compressed'
-        },
-        src: 'theme/style.scss',
-        dest: 'tmp/style.css'
-      },
-
-      expanded: {
-        options: {
-          style: 'expanded',
-          lineNumbers: true
-        },
-        src: 'theme/style.scss',
-        dest: 'tmp/style.css'
-      }
-    },
-
     nodeunit: {
       all: ['test/spec/**/*.js']
     }
   });
 
-  ['contrib-nodeunit', 'notify', 'contrib-sass'].forEach(function(name) {
-    grunt.loadNpmTasks('grunt-' + name);
+  // ['contrib-nodeunit', 'notify', 'contrib-sass'].forEach(function(name) {
+  //   grunt.loadNpmTasks('grunt-' + name);
+  // });
+
+  Object.keys(grunt.util._.extend(pkg.dependencies, pkg.devDependencies)).forEach(function(dep) {
+  if (~dep.search(/^grunt-/))
+      grunt.loadNpmTasks(dep);
   });
 
   grunt.loadTasks('tasks');
 
   grunt.registerTask('test', [
     'section',
-    'sass:expanded',
     'nodeunit'
   ]);
 
