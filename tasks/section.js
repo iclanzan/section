@@ -56,8 +56,6 @@ module.exports = function(grunt) {
     return false;
   };
 
-  grunt.loadNpmTasks('grunt-contrib-copy');
-
   grunt.registerMultiTask('section', 'Generate website from Markdown files.', function() {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options(),
