@@ -35,14 +35,8 @@
     "grunt-contrib-connect": "~0.3.0",
     "grunt-contrib-watch": "~0.4.3",
     "grunt-notify": "~0.2.3",
-    "grunt-spell": "~0.2.1",
-    "growl": "~1.6.1",
     "marked": "~0.2.8",
     "highlight.js": "~7.3",
-    "rss": "~0.0.4",
-    "nopt": "~1.0.10",
-    "findup-sync": "~0.1.0",
-    "resolve": "~0.3.1",
     "typogr": "~0.5.2"
   },
   "devDependencies": {
