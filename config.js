@@ -26,6 +26,7 @@ module.exports = function( grunt ) {
     sectionBase: __dirname,
     content: 'content/',
     output: grunt.option('output') || 'output/',
+    temp: grunt.option('temp') || 'temp',
     layout: layout,
     style: style,
     index_html: 'index.html',
@@ -50,6 +51,10 @@ module.exports = function( grunt ) {
     section: {
       options: options,
       main: {
+        src: options.content,
+        dest: options.temp
+      },
+      build: {
         src: options.content,
         dest: options.output
       }
@@ -80,7 +85,7 @@ module.exports = function( grunt ) {
   tasksConfig.connect = {
     main: {
       options: {
-        base: options.output,
+        base: options.temp,
         hostname: options.host,
         port: options.port
       }
@@ -110,7 +115,7 @@ module.exports = function( grunt ) {
 
   // Distribution build task.
   grunt.registerTask('build', 'Generates a production-ready version of your site.', [
-    'section',
+    'section:build',
     'htmlmin',
     'time',
     'notify:success'
@@ -118,7 +123,7 @@ module.exports = function( grunt ) {
 
   // Default task.
   grunt.registerTask('default', 'Generates and serves a development version of your site that is automatically regenerated when files change.', [
-    'section',
+    'section:main',
     'notify:success',
     'connect',
     'watch'

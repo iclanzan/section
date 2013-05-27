@@ -4,14 +4,20 @@ var grunt = require('grunt');
 var path = require('path');
 
 exports.section = {
-  main: function(test) {
-    test.expect(1);
+  structure: function(test) {
+    test.expect(2);
 
-    var actual = [];
-    grunt.file.recurse('tmp', function(abs, root, subdir, file) {
-      actual.push(path.join(subdir || '', file));
+    var actualMain = [];
+    grunt.file.recurse('tmp/main', function(abs, root, subdir, file) {
+      actualMain.push(path.join(subdir || '', file));
     });
-    actual.sort();
+    actualMain.sort();
+
+    var actualBuild = [];
+    grunt.file.recurse('tmp/main', function(abs, root, subdir, file) {
+      actualBuild.push(path.join(subdir || '', file));
+    });
+    actualBuild.sort();
 
     var expected = [];
     grunt.file.recurse('test/expected', function(abs, root, subdir, file) {
@@ -19,7 +25,8 @@ exports.section = {
     });
     expected.sort();
 
-    test.deepEqual(actual, expected, 'should copy several files');
+    test.deepEqual(actualMain, expected, 'Expected different file structure for main task.');
+    test.deepEqual(actualBuild, expected, 'Expected different file structure for build task.');
 
     test.done();
   }

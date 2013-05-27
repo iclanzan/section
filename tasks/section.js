@@ -57,9 +57,8 @@ module.exports = function(grunt) {
   };
 
   grunt.registerMultiTask('section', 'Generate website from Markdown files.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options(),
-        isBuild = this.target == 'build',
+        isBuild = options.isBuild = this.target == 'build',
         src = this.data.src,
         dest = this.data.dest;
 
@@ -223,13 +222,13 @@ module.exports = function(grunt) {
         expand: true,
         cwd: path.join(options.sectionDir, 'theme/assets'),
         src: '**/**',
-        dest: options.output
+        dest: dest
       },
       main: {
         expand: true,
         cwd: path.join(options.base,'assets'),
         src: '**/**',
-        dest: options.output
+        dest: dest
       }
     });
 
@@ -241,7 +240,7 @@ module.exports = function(grunt) {
           lineNumbers: !isBuild
         },
         src: options.style,
-        dest: path.join(options.output, 'style.css')
+        dest: path.join(dest, 'style.css')
       }
     });
 

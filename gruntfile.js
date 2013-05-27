@@ -26,7 +26,11 @@ module.exports = function( grunt ) {
       },
       main: {
         src: 'test/fixtures/content',
-        dest: 'tmp'
+        dest: 'tmp/main'
+      },
+      build: {
+        src: 'test/fixtures/content',
+        dest: 'tmp/build'
       }
     },
 
@@ -34,10 +38,6 @@ module.exports = function( grunt ) {
       all: ['test/spec/**/*.js']
     }
   });
-
-  // ['contrib-nodeunit', 'notify', 'contrib-sass'].forEach(function(name) {
-  //   grunt.loadNpmTasks('grunt-' + name);
-  // });
 
   Object.keys(grunt.util._.extend(pkg.dependencies, pkg.devDependencies)).forEach(function(dep) {
   if (~dep.search(/^grunt-/))
@@ -53,4 +53,7 @@ module.exports = function( grunt ) {
 
   // Default task.
   grunt.registerTask('default', ['test']);
+
+  // Delete temp folder before doing anything
+  grunt.file.delete('tmp');
 };
