@@ -207,7 +207,7 @@ module.exports = function(grunt) {
     grunt.config.set('copy', {
       init: {
         expand: true,
-        cwd: path.join(options.sectionDir, 'theme/assets'),
+        cwd: path.join(options.sectionBase, 'theme/assets'),
         src: '**/**',
         dest: dest
       },
