@@ -32,10 +32,11 @@ module.exports = function(grunt) {
       path = require('path'),
       marked = require('marked'),
       hljs = require('highlight.js'),
+      cheerio = require('cheerio'),
 
       _ = grunt.util._,
       extend = _.extend,
-      forEach = _.forEach,
+      // forEach = _.forEach,
       processTemplate = grunt.template.process,
       file = grunt.file,
       readFile = file.read,
@@ -46,9 +47,9 @@ module.exports = function(grunt) {
 
   var supportedLanguages = Object.keys(hljs.LANGUAGES);
 
-  function text(str) {
-    return _.clean(_.stripTags(marked(str)));
-  }
+  // function text(str) {
+  //   return _.clean(_.stripTags(marked(str)));
+  // }
 
   var is = function() {
     for(var i = 0, l = arguments.length; i < l; i++)
@@ -155,30 +156,19 @@ module.exports = function(grunt) {
 
         // Page
         else {
-          var content = readFile(filepath),
-              tokens = marked.lexer(content),
-              attrs = {
-                body: '',
-                src: filepath
-              };
+          var $ = cheerio.load(marked(readFile(filepath)), {ignoreWhitespace: true});
 
-          forEach(tokens, function(token) {
-            // Get the title from the markdown document’s 1st level 1 heading.
-            if (!attrs.title && token.type == 'heading' && token.depth == 1) {
-              attrs.title = text(token.text);
-            }
-            // Use the first paragraph as the description.
-            if (!attrs.description && token.type == 'paragraph') {
-              attrs.description = text(token.text);
-            }
-            if (attrs.title && attrs.description) return false;
-            // Hack to add id attributes to headers to enable linking to them.
-            // if (token.type == 'heading') {
-            //   token.depth += ' id="' + _.slugify(text(token.text)) + '"';
-            // }
+          $('h1, h2, h3').each(function() {
+            var el = $(this);
+            el.attr('id', _.slugify(el.text()));
           });
 
-          attrs.body = marked.parser(tokens);
+          var attrs = {
+                title: $('h1').first().text(),
+                description: $('p').first().text(),
+                body: $.html(),
+                src: filepath
+              };
 
           // Index page
           if (name == 'index') {
