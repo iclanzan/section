@@ -4,11 +4,11 @@
 
 var path = require('path');
 
-// Load grunt.
 var cwd = process.cwd();
 
 process.chdir(__dirname + '/../');
 
+// Load grunt.
 var grunt = require('grunt'),
     pkg = grunt.file.readJSON('package.json'),
     optlist = grunt.cli.optlist,
@@ -16,6 +16,7 @@ var grunt = require('grunt'),
     log = grunt.log;
 
 // Load tasks from npm modules.
+// We are loading tasks here because the base path will be different inside the Gruntfile.
 Object.keys(pkg.dependencies).forEach(function(dep) {
   if (~dep.search(/^grunt-/))
       grunt.loadNpmTasks(dep);
@@ -63,10 +64,10 @@ help.initTasks = function() {
   // Initialize task system so that the tasks can be listed.
   grunt.task.init([], {help: true});
 
-  // Build object of tasks by info (where they were loaded from).
   help._tasks = [];
   Object.keys(grunt.task._tasks).forEach(function(name) {
     var task = grunt.task._tasks[name];
+    // We only want to print tasks defined in the Gruntfile.
     if (task.meta.info == 'Gruntfile') {
       help.initCol1(name);
       help._tasks.push(task);

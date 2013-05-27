@@ -153,7 +153,8 @@ module.exports = function( grunt ) {
     'sass:compressed',
     'copy:main',
     'htmlmin',
-    'time'
+    'time',
+    'notify:success'
   ]);
 
   // Default task.
