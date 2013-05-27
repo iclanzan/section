@@ -77,12 +77,14 @@ module.exports = function(grunt) {
       });
 
     // Delete the output directory
-    try {
-      deleteFile(dest);
-    } catch (e) {
-      grunt.log.error();
-      grunt.verbose.error(e);
-      grunt.fail.warn('Failed to clean output directory.');
+    if (file.exists(dest)) {
+      try {
+        deleteFile(dest);
+      } catch (e) {
+        grunt.log.error();
+        grunt.verbose.error(e);
+        grunt.fail.warn('Failed to clean output directory.');
+      }
     }
 
     var pageProto = {
