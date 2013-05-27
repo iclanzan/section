@@ -37,9 +37,11 @@ module.exports = function(grunt) {
       extend = _.extend,
       forEach = _.forEach,
       processTemplate = grunt.template.process,
-      readFile = grunt.file.read,
-      writeFile = grunt.file.write,
-      copyFile = grunt.file.copy,
+      file = grunt.file,
+      readFile = file.read,
+      writeFile = file.write,
+      deleteFile = file.delete,
+      copyFile = file.copy,
       info = grunt.log.writeln;
 
   var supportedLanguages = Object.keys(hljs.LANGUAGES);
@@ -73,6 +75,15 @@ module.exports = function(grunt) {
           return hljs.highlightAuto(text).value;
         }
       });
+
+    // Delete the output directory
+    try {
+      deleteFile(dest, options);
+    } catch (e) {
+      grunt.log.error();
+      grunt.verbose.error(e);
+      grunt.fail.warn('Failed to clean output directory.');
+    }
 
     var pageProto = {
       title: '',

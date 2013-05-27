@@ -54,10 +54,6 @@ module.exports = function( grunt ) {
       }
     },
 
-    clean: {
-      main: [options.output]
-    },
-
     copy: {
       init: {
         expand: true,
@@ -147,11 +143,9 @@ module.exports = function( grunt ) {
 
   // Distribution build task.
   grunt.registerTask('build', 'Generates a production-ready version of your site.', [
-    'clean',
-    'copy:init',
     'section',
     'sass:compressed',
-    'copy:main',
+    'copy',
     'htmlmin',
     'time',
     'notify:success'
@@ -159,11 +153,9 @@ module.exports = function( grunt ) {
 
   // Default task.
   grunt.registerTask('default', 'Generates and serves a development version of your site that is automatically regenerated when files change.', [
-    'clean',
-    'copy:init',
     'section',
     'sass:expanded',
-    'copy:main',
+    'copy',
     'notify:success',
     'connect',
     'watch'

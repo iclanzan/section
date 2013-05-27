@@ -5,9 +5,6 @@ module.exports = function( grunt ) {
   var pkg = grunt.file.readJSON(__dirname + '/package.json');
 
   grunt.initConfig({
-    clean: {
-      test: ['tmp']
-    },
 
     copy: {
       init: {
@@ -78,11 +75,9 @@ module.exports = function( grunt ) {
   grunt.loadTasks('tasks');
 
   grunt.registerTask('test', [
-    'clean',
-    'copy:init',
     'section',
     'sass:expanded',
-    'copy:test',
+    'copy',
     'nodeunit'
   ]);
 
