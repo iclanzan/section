@@ -67,12 +67,12 @@ module.exports = function( grunt ) {
           removeComments: true,
           removeCommentsFromCDATA: true,
           removeCDATASectionsFromCDATA: true,
-          // collapseWhitespace: false,
-          // collapseBooleanAttributes: true,
-          // removeAttributeQuotes: true,
-          removeRedundantAttributes: false,
-          removeEmptyAttributes: true
-          // removeOptionalTags: true
+          collapseWhitespace: false,
+          collapseBooleanAttributes: true,
+          removeAttributeQuotes: true,
+          removeRedundantAttributes: true,
+          removeEmptyAttributes: true,
+          removeOptionalTags: true
         },
         expand: true,
         cwd: options.output,
