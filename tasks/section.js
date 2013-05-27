@@ -56,6 +56,8 @@ module.exports = function(grunt) {
     return false;
   };
 
+  grunt.loadNpmTasks('grunt-contrib-copy');
+
   grunt.registerMultiTask('section', 'Generate website from Markdown files.', function() {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options(),
@@ -78,7 +80,7 @@ module.exports = function(grunt) {
 
     // Delete the output directory
     try {
-      deleteFile(dest, options);
+      deleteFile(dest);
     } catch (e) {
       grunt.log.error();
       grunt.verbose.error(e);
@@ -215,5 +217,24 @@ module.exports = function(grunt) {
         info('Generated “' + page.dest + '”.');
       }
     });
+
+    // Configure copy task
+    grunt.config.set('copy', {
+      init: {
+        expand: true,
+        cwd: path.join(options.sectionDir, 'theme/assets'),
+        src: '**/**',
+        dest: options.output
+      },
+      main: {
+        expand: true,
+        cwd: path.join(options.base,'assets'),
+        src: '**/**',
+        dest: options.output
+      }
+    });
+console.log(grunt.config.get('copy'));
+    grunt.task.run('copy');
+
   });
 };

@@ -6,26 +6,12 @@ module.exports = function( grunt ) {
 
   grunt.initConfig({
 
-    copy: {
-      init: {
-        expand: true,
-        cwd: 'theme/assets',
-        src: '**/**',
-        dest: 'tmp'
-      },
-      test: {
-        expand: true,
-        cwd: 'test/fixtures/assets',
-        src: '**/**',
-        dest: 'tmp'
-      }
-    },
-
     section: {
       options: {
-        // base: '',
-        // content: 'content/',
-        // output: 'output/',
+        base: 'test/fixtures',
+        sectionBase: '',
+        content: 'content',
+        output: 'tmp',
         layout: 'theme/layout.jst',
         style: 'theme/style.scss',
         index_html: 'index.html',
@@ -39,8 +25,8 @@ module.exports = function( grunt ) {
         ga_uid: ''
       },
       main: {
-        src: 'test/fixtures/content/',
-        dest: 'tmp/'
+        src: 'test/fixtures/content',
+        dest: 'tmp'
       }
     },
 
@@ -68,7 +54,7 @@ module.exports = function( grunt ) {
     }
   });
 
-  ['contrib-nodeunit', 'notify', 'contrib-clean', 'contrib-copy', 'contrib-sass'].forEach(function(name) {
+  ['contrib-nodeunit', 'notify', 'contrib-sass'].forEach(function(name) {
     grunt.loadNpmTasks('grunt-' + name);
   });
 
@@ -77,7 +63,6 @@ module.exports = function( grunt ) {
   grunt.registerTask('test', [
     'section',
     'sass:expanded',
-    'copy',
     'nodeunit'
   ]);
 

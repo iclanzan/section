@@ -23,6 +23,7 @@ module.exports = function( grunt ) {
 
   var defaultConfig = {
     base: grunt.option('base') || '',
+    sectionBase: __dirname,
     content: 'content/',
     output: grunt.option('output') || 'output/',
     layout: layout,
@@ -50,21 +51,6 @@ module.exports = function( grunt ) {
       options: options,
       main: {
         src: options.content,
-        dest: options.output
-      }
-    },
-
-    copy: {
-      init: {
-        expand: true,
-        cwd: __dirname + '/theme/assets',
-        src: '**/**',
-        dest: options.output
-      },
-      main: {
-        expand: true,
-        cwd: 'assets',
-        src: '**/**',
         dest: options.output
       }
     },
@@ -145,7 +131,6 @@ module.exports = function( grunt ) {
   grunt.registerTask('build', 'Generates a production-ready version of your site.', [
     'section',
     'sass:compressed',
-    'copy',
     'htmlmin',
     'time',
     'notify:success'
@@ -155,7 +140,6 @@ module.exports = function( grunt ) {
   grunt.registerTask('default', 'Generates and serves a development version of your site that is automatically regenerated when files change.', [
     'section',
     'sass:expanded',
-    'copy',
     'notify:success',
     'connect',
     'watch'
