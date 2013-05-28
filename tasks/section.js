@@ -36,7 +36,6 @@ module.exports = function(grunt) {
 
       _ = grunt.util._,
       extend = _.extend,
-      processTemplate = grunt.template.process,
       file = grunt.file,
       readFile = file.read,
       writeFile = file.write,
@@ -101,6 +100,14 @@ module.exports = function(grunt) {
     var template = readFile(options.layout);
     if (this.target == 'main')
       template = template.replace('</body>', '<script src="http://localhost:35729/livereload.js"></script></body>');
+
+    try {
+      var templateFn = _.template(template);
+    }
+    catch (e) {
+      e.message = 'An error occurred while processing a template (' + e.message + ').';
+      grunt.warn(e, grunt.fail.code.TEMPLATE_ERROR);
+    }
 
     (function recurse(rootdir, site, subdir) {
       subdir && (subdir += '/') || (subdir = '');
@@ -196,9 +203,7 @@ module.exports = function(grunt) {
     }).forEach(function(page) {
       // Generate the html file
       if (page.dest) {
-        writeFile(page.dest, processTemplate(template, {
-          data: extend({}, page, options)
-        }));
+        writeFile(page.dest, templateFn(extend({}, page, options)));
         info('Generated “' + page.dest + '”.');
       }
     });
