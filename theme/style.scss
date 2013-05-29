@@ -21,7 +21,7 @@
 }
 
 html {
-  background: #F9F9F9;
+  background: #F6F4F0;
   width: 100%;
   height: 100%;
   font-size: 10px;
@@ -35,10 +35,10 @@ body {
   font-size: 1.8rem;
   font-family: "Source Sans Pro", "Myriad Pro", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Ubuntu, "Segoe UI", Geneva, Verdana, sans-serif;
   color: #333;
-  background: #FFF;
+  background: #FDFDFD;
   line-height: 1.4;
   overflow: auto;
-  border-right: 1px solid #EEE;
+  border-right: 1px solid #DDDBD7;
 }
 
 main {
@@ -87,7 +87,7 @@ h1 {
 
 h2 {
   font-size: 1.6em;
-  border-bottom: 1px solid #EEE;
+  border-bottom: 1px solid #DDDBD7;
 }
 
 h3 {
@@ -121,17 +121,16 @@ table {
 }
 
 td {
-  border: 1px solid #EEE;
+  border: 1px solid #DDDBD7;
   padding: .2em .8em;
 }
 
 th {
-  border: 1px solid #DDD;
-  background: #F9F9F9;
+  background: #F9F8F7;
   padding: .4em .8em;
 }
 
-main a {
+main a:hover {
   border-bottom: 1px solid #09C;
 }
 
@@ -148,17 +147,18 @@ del {
 
 hr {
   margin: 2em 0;
-  border-bottom: 1px solid #EEE;
+  border-bottom: 1px solid #DDDBD7;
 }
 
 blockquote {
+  color: #666;
   font-style: italic;
-  background: #FFFAF0;
   position: relative;
 }
 
 blockquote:before {
   content: "\201C";
+  line-height: 1;
   position: absolute;
   font-size: 3.6em;
   margin: 0 0 0 -.1em;
@@ -231,7 +231,7 @@ footer {
   position: absolute;
   bottom: 2rem;
   display: inline-block;
-  background: #DDD;
+  background: rgba(0, 0, 0, .1);
   font-size: .8em;
   color: #FFF;
   text-transform: uppercase;
@@ -269,8 +269,8 @@ time {
     padding-left: 66.6666%;
   }
 
-  blockquote, pre {
-    border-left: 1px solid #EEE;
+  pre {
+    border-left: 1px solid #DDDBD7;
     border-radius: 2px 0 0 2px;
   }
 }
@@ -281,22 +281,19 @@ time {
   }
 }
 
-blockquote, pre {
-  border-top: 1px solid #EEE;
-  border-bottom: 1px solid #EEE;
-}
-
 pre {
   overflow: auto;
-  background: #F7F8F9;
+  background: #F9F8F7;
+  border-top: 1px solid #DDDBD7;
+  border-bottom: 1px solid #DDDBD7;
 }
 
 code {
   font-family: "Source Code Pro", Monaco, "Lucida Console", "Ubuntu Mono", Consolas, monospace;
   // We are only loading the regular font. We don’t want the browser to auto-generate other weights.
   font-weight: 400;
-  border: 1px solid #EEE;
-  background: #F7F8F9;
+  border: 1px solid #DDDBD7;
+  background: #F9F8F7;
   padding: 0 .2rem;
   font-size: .9em;
   border-radius: 2px;
@@ -376,7 +373,7 @@ pre .markdown .link_url {
 }
 
 .on,
-a:hover,
+main a, a:hover,
 pre .char,
 pre .variable,
 pre .label,
