@@ -37,7 +37,8 @@ module.exports = function( grunt ) {
     host: 'localhost',
     port: grunt.option('port') || 8000,
     rss_count: 10,
-    ga_uid: ''
+    ga_uid: '',
+    git: {}
   };
 
   // Read section config file
@@ -46,6 +47,7 @@ module.exports = function( grunt ) {
 
   var options = _.extend(defaultConfig, userConfig);
 
+  var buildTasks = ['section:build', 'htmlmin', 'time'];
 
   var tasksConfig = {
     section: {
@@ -82,6 +84,18 @@ module.exports = function( grunt ) {
     }
   };
 
+  if (options.git.url) {
+    tasksConfig.git_deploy = {
+      main: {
+        options: {
+          url: options.git.url
+        },
+        src: options.output
+      }
+    };
+    buildTasks.push('git_deploy');
+  }
+
   tasksConfig.connect = {
     main: {
       options: {
@@ -113,13 +127,10 @@ module.exports = function( grunt ) {
 
   grunt.initConfig(tasksConfig);
 
+  buildTasks.push('notify:success');
+
   // Distribution build task.
-  grunt.registerTask('build', 'Generates a production-ready version of your site.', [
-    'section:build',
-    'htmlmin',
-    'time',
-    'notify:success'
-  ]);
+  grunt.registerTask('build', 'Generates a production-ready version of your site.', buildTasks);
 
   // Default task.
   grunt.registerTask('default', 'Generates and serves a development version of your site that is automatically regenerated when files change.', [
