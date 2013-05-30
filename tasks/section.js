@@ -203,7 +203,10 @@ module.exports = function(grunt) {
     }).forEach(function(page) {
       // Generate the html file
       if (page.dest) {
-        writeFile(page.dest, templateFn(extend({}, page, options)));
+        var html = templateFn(extend({}, page, options));
+        // Run html through cheerio to remove extra whitespace.
+        html = cheerio.load(html, {ignoreWhitespace: true}).html();
+        writeFile(page.dest, html);
         info('Generated “' + page.dest + '”.');
       }
     });
