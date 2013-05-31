@@ -112,7 +112,7 @@ module.exports = function( grunt ) {
     },
     pages: {
       files: options.content + '**/**',
-      tasks: ['clean', 'section', 'sass:expanded', 'copy']
+      tasks: ['section']
     }
   };
 
