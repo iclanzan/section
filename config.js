@@ -110,9 +110,9 @@ module.exports = function( grunt ) {
     options: {
       livereload: true
     },
-    pages: {
-      files: options.content + '**/**',
-      tasks: ['section']
+    main: {
+      files: [options.content + '**/**', 'assets/**/**', style, layout, userConfigPath],
+      tasks: ['section:main']
     }
   };
 
