@@ -227,12 +227,11 @@ module.exports = function(grunt) {
       }
     });
 
-    // Configure sass task.
-    grunt.config.set('sass', {
+    // Configure less task.
+    grunt.config.set('less', {
       main: {
         options: {
-          style: isBuild ? 'compressed' : 'expanded',
-          lineNumbers: !isBuild
+          yuicompress: isBuild
         },
         src: options.style,
         dest: path.join(dest, 'style.css')
@@ -240,7 +239,7 @@ module.exports = function(grunt) {
     });
 
     // Queue next tasks.
-    grunt.task.run('copy', 'sass');
+    grunt.task.run('copy', 'less');
 
   });
 };

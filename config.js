@@ -17,7 +17,7 @@ module.exports = function( grunt ) {
   }
 
   var layout = find(['layout.jst', __dirname + '/theme/layout.jst'], isFile),
-      style = find(['style.scss', 'syle.sass', 'syle.css', __dirname + '/theme/style.scss'], isFile);
+      style = find(['style.less', 'syle.css', __dirname + '/theme/style.less'], isFile);
 
   var pkg = readJSON(__dirname + '/package.json');
 
