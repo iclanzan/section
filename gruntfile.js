@@ -13,7 +13,7 @@ module.exports = function( grunt ) {
         content: 'content',
         output: 'tmp',
         layout: 'theme/layout.jst',
-        style: 'theme/style.scss',
+        style: 'theme/style.less',
         index_html: 'index.html',
         highlight: true,
         pkg: pkg,
