@@ -4,7 +4,7 @@
     {
       "path": "./",
       "folder_exclude_patterns": ["tmp", "node_modules", ".sass-cache", ".git"],
-      "file_exclude_patterns": ["*.sublime-workspace"]
+      "file_exclude_patterns": ["*.sublime-workspace", "*.swp"]
     }
   ],
   "settings":
@@ -19,7 +19,8 @@
   [
     {
       "name": "Section Test",
-      "cmd": ["grunt test", "--no-color"]
+      "cmd": ["grunt", "test", "--no-color"],
+      "path": "/usr/local/bin"
     }
   ]
 }
