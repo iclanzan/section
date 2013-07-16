@@ -42,7 +42,8 @@ module.exports = function( grunt ) {
   };
 
   // Read section config file
-  var userConfigPath = grunt.option('config') || find(['section.json', 'section.yaml', 'section.yml'], isFile),
+  var possibleConfigFiles = ['section.json', 'section.yaml', 'section.yml'];
+  var userConfigPath = grunt.option('config') || find(possibleConfigFiles, isFile),
       userConfig = userConfigPath && readAny(userConfigPath) || {};
 
   var options = _.extend(defaultConfig, userConfig);
@@ -111,7 +112,7 @@ module.exports = function( grunt ) {
       livereload: true
     },
     main: {
-      files: [options.content + '**/**', 'assets/**/**', style, layout, userConfigPath],
+      files: [options.content + '**/**', 'assets/**/**', style, layout].concat(possibleConfigFiles),
       tasks: ['section:main']
     }
   };
