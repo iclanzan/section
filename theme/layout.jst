@@ -23,28 +23,7 @@
 </head>
 <body>
 
-  <main>
-    <header>
-      <% if (date) { %>
-      <time datetime="<%= dateFormat(date, 'yyyy-mm-dd') %>"><%= dateFormat(date, 'mmmm d, yyyy') %></time>
-      <% } %>
-    </header>
-    <%= body %>
-    <% if (is('index')) { %>
-    <hr />
-    <nav>
-        <% children.forEach(function(page) { %>
-        <article>
-          <% if (page.date) { %>
-          <time datetime="<%= dateFormat(page.date, 'yyyy-mm-dd') %>"><%= dateFormat(page.date, 'mmmm d, yyyy') %></time>
-          <% } %>
-          <h3><a href="<%= page.rel %>"><%= page.title %></a></h3>
-          <p><%= page.description %></p>
-        </article>
-        <% }) %>
-    </nav>
-    <% } %>
-  </main>
+  <span id="btn"></span>
 
   <section>
     <aside>
@@ -77,7 +56,7 @@
         <% if (pages[0].date) { %>
         <h4>Recent</h4>
         <ul>
-        <% for (var i = 0; i < 3; i++) if (pages[i].date) { %>
+        <% for (var i = 0; i < 3; i++) if (pages[i] && pages[i].date) { %>
         <li>
           <time datetime="<%= dateFormat(pages[i].date, 'yyyy-mm-dd') %>"><%= dateFormat(pages[i].date, 'mmmm d, yyyy') %></time>
           <a href="<%= pages[i].rel %>"><%= pages[i].title %></a>
@@ -89,5 +68,37 @@
       <footer>Built with <a title="<%=pkg.name + ' v' + pkg.version%>" href="<%=pkg.homepage%>"><strong><%=pkg.title%></strong></a></footer>
     </aside>
   </section>
+
+  <main>
+    <article>
+      <header>
+        <% if (date) { %>
+        <time datetime="<%= dateFormat(date, 'yyyy-mm-dd') %>"><%= dateFormat(date, 'mmmm d, yyyy') %></time>
+        <% } %>
+      </header>
+      <%= body %>
+      <% if (is('index')) { %>
+      <hr />
+      <nav>
+          <% children.forEach(function(page) { %>
+          <div>
+            <% if (page.date) { %>
+            <time datetime="<%= dateFormat(page.date, 'yyyy-mm-dd') %>"><%= dateFormat(page.date, 'mmmm d, yyyy') %></time>
+            <% } %>
+            <h3><a href="<%= page.rel %>"><%= page.title %></a></h3>
+            <p><%= page.description %></p>
+          </div>
+          <% }) %>
+      </nav>
+      <% } %>
+    </article>
+  </main>
+
+  <script>
+    /(iPad|iPhone|iPod)/g.test(navigator.userAgent) && document.documentElement.classList.add('ios');
+    // document.getElementById('btn').onclick = function() {
+    //   document.body.className = document.body.className ? '' : 'open';
+    // };
+  </script>
 </body>
 </html>
