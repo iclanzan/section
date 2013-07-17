@@ -14,7 +14,7 @@ exports.section = {
     actualMain.sort();
 
     var actualBuild = [];
-    grunt.file.recurse('tmp/main', function(abs, root, subdir, file) {
+    grunt.file.recurse('tmp/build', function(abs, root, subdir, file) {
       actualBuild.push(path.join(subdir || '', file));
     });
     actualBuild.sort();
