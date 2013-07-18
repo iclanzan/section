@@ -88,6 +88,7 @@ module.exports = function(grunt) {
       body: '',
       date: 0,
       author: false,
+      cover: false,
       is: is,
       mailToLink: mailToLink,
       dateFormat: grunt.template.date
@@ -165,12 +166,23 @@ module.exports = function(grunt) {
             el.attr('id', _.slugify(el.text()));
           });
 
+          var cover = $.root().children('p:first-child').find('img:only-child');
+
           var attrs = {
                 title: $('h1').first().text(),
-                description: $('p').first().text(),
-                body: $.html(),
+                description: $('h1+p').first().text(),
                 src: filepath
               };
+
+          if (cover.length) {
+            cover.parent().remove();
+            attrs.cover = {
+              src: cover.attr('src'),
+              alt: cover.attr('alt')
+            };
+          }
+
+          attrs.body = $.html();
 
           // Index page
           if (name == 'index') {
