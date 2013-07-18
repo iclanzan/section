@@ -71,6 +71,9 @@
 
   <main>
     <article>
+      <% if (cover) { %>
+        <figure><img src="<%= cover.src %>" alt="<%= cover.alt %>"/></figure>
+      <% } %>
       <header>
         <% if (date) { %>
         <time datetime="<%= dateFormat(date, 'yyyy-mm-dd') %>"><%= dateFormat(date, 'mmmm d, yyyy') %></time>
