@@ -4,10 +4,12 @@
 @drawerWidth: 28rem;
 @transitionDuration: .3s;
 
+// Colors
 @black: #333;
 @white: #FDFDFD;
 @lightGrey: #F6F4F0;
 @darkGrey: #DDDBD7;
+@brand: #09C;
 
 /* Mixins *\
 \* ====== */
@@ -39,7 +41,7 @@
 }
 
 ::selection {
-  background: #09C;
+  background: @brand;
   color: #FFF;
   text-shadow: none;
 }
@@ -167,7 +169,7 @@ th {
 }
 
 main a:hover {
-  border-bottom: 1px solid #09C;
+  border-bottom: 1px solid @brand;
 }
 
 img {
@@ -184,26 +186,6 @@ del {
 hr {
   margin: 2em 0;
   border-bottom: 1px solid @darkGrey;
-}
-
-blockquote {
-  color: #666;
-  font-style: italic;
-  position: relative;
-}
-
-blockquote:before {
-  content: "\201C";
-  line-height: 1;
-  position: absolute;
-  font-size: 3.6em;
-  margin: 0 0 0 -.1em;
-  color: #09C;
-}
-
-main blockquote p {
-  padding: 0;
-  margin: 1em 0 1em 2em;
 }
 
 ol, ul {
@@ -241,7 +223,7 @@ main ol li:before {
 }
 
 main h1, h2, main h3, main h4, main h5, main h6,
-main p, pre code, main blockquote, main ol, main ul, main nav time,
+main p, pre code, blockquote, main ol, main ul, main nav time,
 header, aside nav, table {
   max-width: 56rem;
   margin-left: auto;
@@ -266,6 +248,37 @@ div {
   margin: 2rem 0;
 }
 
+blockquote {
+  border-left: .5rem solid @brand;
+  padding-left: 1.5rem;
+  color: #666;
+}
+
+.pullquote {
+  border: 0;
+  padding-left: 2rem;
+  text-align: center;
+}
+
+.pullquote:before {
+  content: "\201C";
+  // position: absolute;
+  // top: 0;
+  display: block;
+  height: .7em;
+  font-size: 3.6em;
+  color: @brand;
+}
+
+main blockquote p {
+  padding: 0;
+}
+
+main .pullquote p {
+  font-size: 1.2em;
+  font-style: italic;
+}
+
 footer {
   border-top: 1px solid @darkGrey;
   background: @lightGrey;
@@ -286,7 +299,7 @@ time {
 
 .home:after {
   content: "*";
-  color: #09C;
+  color: @brand;
 }
 
 .section:before {
@@ -446,7 +459,7 @@ pre .clojure .attribute,
 pre .asciidoc .attribute,
 pre .lasso .attribute,
 pre .coffeescript .property {
-  color: #09C;
+  color: @brand;
 }
 
 strong,
