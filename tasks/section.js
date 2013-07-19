@@ -213,10 +213,11 @@ module.exports = function(grunt) {
           var code = $el.text();
           var lang = ($el.attr('class') || '').replace('lang-', '');
 
-          if (lang && lang != 'text' && lang != 'plain' && ~supportedLanguages.indexOf(lang))
+          if (lang && ~supportedLanguages.indexOf(lang))
             $el.html(hljs.highlight(lang, code).value);
 
-          else $el.html(hljs.highlightAuto(code).value);
+          else if(lang != 'text' && lang != 'plain')
+            $el.html(hljs.highlightAuto(code).value);
         });
 
         writeFile(page.dest, $.html());
