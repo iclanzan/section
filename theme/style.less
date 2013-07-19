@@ -110,7 +110,7 @@ p, blockquote, blockquote:before, ol, ul {
   font-family: "Source Sans Pro", Georgia, "Times New Roman", Times, serif;
 }
 
-p, blockquote, ol, ul, pre {
+p, blockquote, ol, ul, pre, table {
   margin: .5em 0 1.5em;
 }
 
@@ -151,7 +151,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 table {
-  margin: .8em auto 1.2em auto;
+  width: 56rem;
   border-collapse: collapse;
 }
 
@@ -161,7 +161,8 @@ td {
 }
 
 th {
-  background: #F9F8F7;
+  border: 1px solid @darkGrey;
+  background: @lightGrey;
   padding: .4em .8em;
 }
 
@@ -241,7 +242,7 @@ main ol li:before {
 
 main h1, h2, main h3, main h4, main h5, main h6,
 main p, pre code, main blockquote, main ol, main ul, main nav time,
-header, aside nav {
+header, aside nav, table {
   max-width: 56rem;
   margin-left: auto;
   margin-right: auto;
