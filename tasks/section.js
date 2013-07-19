@@ -57,20 +57,6 @@ module.exports = function(grunt) {
         src = this.data.src,
         dest = this.data.dest;
 
-    if (options.highlight)
-      marked.options({
-        highlight: function (text, lang) {
-          if (lang) {
-            if (~supportedLanguages.indexOf(lang))
-              return hljs.highlight(lang, text).value;
-            if (lang == 'text' || lang != 'plain')
-              return text;
-          }
-
-          return hljs.highlightAuto(text).value;
-        }
-      });
-
     // Delete the output directory
     if (file.exists(dest)) {
       try {
@@ -216,9 +202,24 @@ module.exports = function(grunt) {
       // Generate the html file
       if (page.dest) {
         var html = templateFn(extend({}, page, options));
+
         // Run html through cheerio to remove extra whitespace.
-        html = cheerio.load(html, {ignoreWhitespace: true}).html();
-        writeFile(page.dest, html);
+        var $ = cheerio.load(html, {ignoreWhitespace: true});
+
+        // Add highlighting to code blocks. We are not doing it when parsing markdown because
+        // cheerio is stripping whitespaces.
+        $('pre > code').each(function() {
+          var $el = $(this);
+          var code = $el.text();
+          var lang = ($el.attr('class') || '').replace('lang-', '');
+
+          if (lang && lang != 'text' && lang != 'plain' && ~supportedLanguages.indexOf(lang))
+            $el.html(hljs.highlight(lang, code).value);
+
+          else $el.html(hljs.highlightAuto(code).value);
+        });
+
+        writeFile(page.dest, $.html());
         info('Generated “' + page.dest + '”.');
       }
     });
