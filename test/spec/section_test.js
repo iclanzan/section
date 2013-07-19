@@ -41,5 +41,17 @@ exports.section = {
     test.strictEqual($('main article > figure:first-child').length, 0, 'Expected a cover image.');
 
     test.done();
+  },
+  pullQuote: function(test) {
+    test.expect(4);
+
+    var blockquotes = cheerio.load(grunt.file.read('tmp/build/markdown-document/index.html'))('main article > blockquote');
+
+    test.ok(blockquotes.eq(0).hasClass('pullquote'), 'Expected first blockquote to be a pull quote.');
+    test.ok(!blockquotes.eq(1).hasClass('pullquote'), 'Expected second blockquote not to be a pull quote.');
+    test.ok(blockquotes.eq(2).hasClass('pullquote'), 'Expected third blockquote to be a pull quote.');
+    test.ok(!blockquotes.eq(3).hasClass('pullquote'), 'Expected fourth blockquote not to be a pull quote.');
+
+    test.done();
   }
 };

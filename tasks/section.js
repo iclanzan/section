@@ -152,6 +152,10 @@ module.exports = function(grunt) {
             el.attr('id', _.slugify(el.text()));
           });
 
+          $(':root > blockquote').filter(function() {
+            return this.children('p:only-child').length && !this.find('img').length;
+          }).addClass('pullquote');
+
           var cover = $.root().children('p:first-child').find('img:only-child');
 
           var attrs = {
