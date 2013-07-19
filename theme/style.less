@@ -6,6 +6,8 @@
 
 @black: #333;
 @white: #FDFDFD;
+@lightGrey: #F6F4F0;
+@darkGrey: #DDDBD7;
 
 /* Mixins *\
 \* ====== */
@@ -87,20 +89,19 @@ article {
 
 section {
   position: absolute;
+  background: @black;
+  color: @white;
   width: @drawerWidth;
   height: 100%;
   top: 0;
   right: 0;
-  border-left: 1px solid rgba(40, 30, 0, .15); // #DDDBD7
-  background-clip: padding-box;
-  box-sizing: border-box;
   z-index: 1;
+  overflow: auto;
   .transition();
   .translate(@drawerWidth);
 }
 
 aside {
-  background: #F6F4F0;
   min-height: 100%;
   overflow: hidden; // Needed otherwise margins are added externally making the element too tall.
 }
@@ -109,7 +110,7 @@ p, blockquote, blockquote:before, ol, ul {
   font-family: "Source Sans Pro", Georgia, "Times New Roman", Times, serif;
 }
 
-p, blockquote, ol, ul, pre {
+p, blockquote, ol, ul, pre, table {
   margin: .5em 0 1.5em;
 }
 
@@ -121,7 +122,7 @@ h1 {
 
 h2 {
   font-size: 1.6em;
-  border-bottom: 1px solid #DDDBD7;
+  border-bottom: 1px solid @darkGrey;
 }
 
 h3 {
@@ -150,17 +151,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 table {
-  margin: .8em auto 1.2em auto;
+  width: 56rem;
   border-collapse: collapse;
 }
 
 td {
-  border: 1px solid #DDDBD7;
+  border: 1px solid @darkGrey;
   padding: .2em .8em;
 }
 
 th {
-  background: #F9F8F7;
+  border: 1px solid @darkGrey;
+  background: @lightGrey;
   padding: .4em .8em;
 }
 
@@ -181,7 +183,7 @@ del {
 
 hr {
   margin: 2em 0;
-  border-bottom: 1px solid #DDDBD7;
+  border-bottom: 1px solid @darkGrey;
 }
 
 blockquote {
@@ -218,13 +220,13 @@ main ol {
 }
 
 main ul li, main ol li {
+  position: relative;
   margin-left: 2em;
 }
 
 main ul li:before, main ol li:before {
-  display: inline-block;
-  position: relative;
-  margin-left: -2em;
+  position: absolute;
+  left: -2em;
   width: 2em;
   font-weight: bold;
 }
@@ -240,7 +242,7 @@ main ol li:before {
 
 main h1, h2, main h3, main h4, main h5, main h6,
 main p, pre code, main blockquote, main ol, main ul, main nav time,
-header, aside nav, aside footer {
+header, aside nav, table {
   max-width: 56rem;
   margin-left: auto;
   margin-right: auto;
@@ -265,14 +267,10 @@ div {
 }
 
 footer {
-  position: absolute;
-  bottom: 2rem;
-  display: inline-block;
-  background: rgba(40, 30, 0, .15);
-  font-size: .8em;
-  color: #FFF;
-  text-transform: uppercase;
-  border-radius: 0 2px 2px 0;
+  border-top: 1px solid @darkGrey;
+  background: @lightGrey;
+  padding: 4rem 0 2rem;
+  // font-size: .8em;
 }
 
 small {
@@ -300,6 +298,7 @@ time {
   cursor: pointer;
   position: absolute;
   background: @black;
+  box-shadow: 0 0 0 .1rem rgba(red(@white), green(@white), blue(@white), .6);
   border-radius: 2px;
   width: 1rem;
   height: 3rem;
@@ -332,20 +331,17 @@ time {
 }
 
 pre {
-  overflow: auto;
   background: #F9F8F7;
-  border-top: 1px solid #DDDBD7;
-  border-bottom: 1px solid #DDDBD7;
+  border-top: 1px solid @darkGrey;
+  border-bottom: 1px solid @darkGrey;
 }
 
 code {
-  font-family: "Source Code Pro", Monaco, "Lucida Console", "Ubuntu Mono", Consolas, monospace;
-  // We are only loading the regular font. We don’t want the browser to auto-generate other weights.
-  font-weight: 400;
-  border: 1px solid #DDDBD7;
+  // We are only loading the regular font. We don’t want the browser to auto-generate other weights or styles.
+  font: normal 400 .9em "Source Code Pro", Monaco, "Lucida Console", "Ubuntu Mono", Consolas, monospace;
+  border: 1px solid @darkGrey;
   background: #F9F8F7;
   padding: 0 .2rem;
-  font-size: .9em;
   border-radius: 2px;
 }
 
@@ -354,6 +350,7 @@ pre code {
   border: 0;
   padding-top: 1em;
   padding-bottom: 1em;
+  overflow: auto;
 }
 
 pre code,
