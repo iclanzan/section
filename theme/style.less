@@ -219,13 +219,13 @@ main ol {
 }
 
 main ul li, main ol li {
+  position: relative;
   margin-left: 2em;
 }
 
 main ul li:before, main ol li:before {
-  display: inline-block;
-  position: relative;
-  margin-left: -2em;
+  position: absolute;
+  left: -2em;
   width: 2em;
   font-weight: bold;
 }
