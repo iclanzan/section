@@ -6,6 +6,8 @@
 
 @black: #333;
 @white: #FDFDFD;
+@lightGrey: #F6F4F0;
+@darkGrey: #DDDBD7;
 
 /* Mixins *\
 \* ====== */
@@ -87,20 +89,19 @@ article {
 
 section {
   position: absolute;
+  background: @black;
+  color: @white;
   width: @drawerWidth;
   height: 100%;
   top: 0;
   right: 0;
-  border-left: 1px solid rgba(40, 30, 0, .15); // #DDDBD7
-  background-clip: padding-box;
-  box-sizing: border-box;
   z-index: 1;
+  overflow: auto;
   .transition();
   .translate(@drawerWidth);
 }
 
 aside {
-  background: #F6F4F0;
   min-height: 100%;
   overflow: hidden; // Needed otherwise margins are added externally making the element too tall.
 }
@@ -240,7 +241,7 @@ main ol li:before {
 
 main h1, h2, main h3, main h4, main h5, main h6,
 main p, pre code, main blockquote, main ol, main ul, main nav time,
-header, aside nav, aside footer {
+header, aside nav {
   max-width: 56rem;
   margin-left: auto;
   margin-right: auto;
@@ -265,14 +266,10 @@ div {
 }
 
 footer {
-  position: absolute;
-  bottom: 2rem;
-  display: inline-block;
-  background: rgba(40, 30, 0, .15);
-  font-size: .8em;
-  color: #FFF;
-  text-transform: uppercase;
-  border-radius: 0 2px 2px 0;
+  border-top: 1px solid @darkGrey;
+  background: @lightGrey;
+  padding: 4rem 0 2rem;
+  // font-size: .8em;
 }
 
 small {
