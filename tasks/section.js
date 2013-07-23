@@ -147,6 +147,13 @@ module.exports = function(grunt) {
         else {
           var $ = cheerio.load(marked(readFile(filepath)), {ignoreWhitespace: true});
 
+          // Remove align attribute from table cells which is invalid HTML5
+          // and use a class instead.
+          $('[align]').each(function() {
+            var el = $(this);
+            el.addClass(el.attr('align')).removeAttr('align');
+          });
+
           $('h1, h2, h3').each(function() {
             var el = $(this);
             el.attr('id', _.slugify(el.text()));
