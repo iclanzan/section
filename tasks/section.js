@@ -154,7 +154,7 @@ module.exports = function(grunt) {
             el.addClass(el.attr('align')).removeAttr('align');
           });
 
-          $('h1, h2, h3').each(function() {
+          $('h2, h3').each(function() {
             var el = $(this);
             el.attr('id', _.slugify(el.text()));
           });
@@ -178,6 +178,8 @@ module.exports = function(grunt) {
               alt: cover.attr('alt')
             };
           }
+
+          $('h1').first().remove();
 
           attrs.body = $.html();
 

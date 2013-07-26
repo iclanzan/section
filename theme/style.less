@@ -2,14 +2,20 @@
 \* ====== */
 
 @drawerWidth: 28rem;
+@spacingUnit: 1.6rem;
+@lineWidth: .1rem;
+@maxContentWidth: (@drawerWidth * 2);
 @transitionDuration: .3s;
 
 // Colors
+@brand: #09C;
 @black: #333;
 @white: #FDFDFD;
-@lightGrey: #F6F4F0;
+
+@footerBackgroundColor: #F6F4F0;
+@codeBackgroundColor: @footerBackgroundColor;
+@dark: #444;
 @darkGrey: #DDDBD7;
-@brand: #09C;
 
 /* Mixins *\
 \* ====== */
@@ -41,8 +47,8 @@
 }
 
 ::selection {
-  background: @brand;
-  color: #FFF;
+  background: #FFECC0; // #FEFECA; //@brand;
+  // color: #FFF;
   text-shadow: none;
 }
 
@@ -53,18 +59,19 @@ html {
   position: relative;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   position: relative;
   // width: 100%; // This is here to hide the border.
   height: 100%;
-  font-size: 1.8rem;
+  font-size: 1.75rem;
   font-family: "Source Sans Pro", "Myriad Pro", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Ubuntu, "Segoe UI", Geneva, Verdana, sans-serif;
   color: @black;
   background: @white;
   line-height: 1.4;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 main {
@@ -73,20 +80,20 @@ main {
   height: 100%;
   .transition();
   .translate();
+  -webkit-overflow-scrolling: touch;
 }
 
 // Hack to enable clicking on the button sitting on top of a touch overflow
-.ios main:after {
+.ios body:after {
   display: block;
-  background: red;
   content: "";
   height: 1px;
 }
 
 article {
-  height: 100%;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
+  max-width: @maxContentWidth;
+  padding: 0 @spacingUnit;
+  margin: 7rem auto;
 }
 
 section {
@@ -101,39 +108,42 @@ section {
   overflow: auto;
   .transition();
   .translate(@drawerWidth);
+
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+       -o-user-select: none;
+          user-select: none;
+
+  hr {
+    border-color: @dark;
+  }
 }
 
 aside {
-  min-height: 100%;
   overflow: hidden; // Needed otherwise margins are added externally making the element too tall.
+  padding: @spacingUnit;
 }
 
-p, blockquote, blockquote:before, ol, ul {
-  font-family: "Source Sans Pro", Georgia, "Times New Roman", Times, serif;
-}
-
-p, blockquote, ol, ul, pre, table {
+p, ol, ul, pre, table {
   margin: .5em 0 1.5em;
 }
 
 h1 {
   font-size: 2em;
-  font-weight: bold;
   text-transform: capitalize;
 }
 
 h2 {
   font-size: 1.6em;
-  border-bottom: 1px solid @darkGrey;
+  // border-bottom: 1px solid @darkGrey;
 }
 
 h3 {
   font-size: 1.2em;
-  font-weight: bold;
 }
 
 h4 {
-  font-weight: bold;
 }
 
 h5 {
@@ -148,24 +158,31 @@ h6 {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  margin: .5rem 0 0;
   line-height: 1.2;
 }
 
 table {
+  font-size: .9em;
   width: 100%;
   border-collapse: collapse;
 }
 
-td {
-  border: 1px solid @darkGrey;
-  padding: .2em .8em;
+tbody tr {
+  border-top: @lineWidth solid @darkGrey;
 }
 
-th {
-  border: 1px solid @darkGrey;
-  background: @lightGrey;
-  padding: .4em .8em;
+td, th {
+  text-align: left;
+  padding: (@spacingUnit / 2);
+
+  &:first-child {
+    padding-left: @spacingUnit;
+  }
+
+  &:last-child {
+    padding-right: @spacingUnit;
+  }
+}
 
 .left {
   text-align: left;
@@ -190,7 +207,6 @@ img {
 }
 
 del {
-  color: #888;
   text-decoration: line-through;
 }
 
@@ -219,8 +235,8 @@ main ul li, main ol li {
 
 main ul li:before, main ol li:before {
   position: absolute;
-  left: -2em;
-  width: 2em;
+  right: 100%;
+  padding-right: .6em;
   font-weight: bold;
 }
 
@@ -230,24 +246,18 @@ main ul li:before {
 
 main ol li:before {
   counter-increment: c;
-  content: counter(c) ".";
+  content: counters(c, ".") ".";
 }
 
 main h1, h2, main h3, main h4, main h5, main h6,
-main p, pre code, blockquote, main ol, main ul, main nav time,
-header, aside nav, table {
-  max-width: 56rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 2rem;
-  padding-right: 2rem;
+main p, pre code, main ol, main ul, main nav time,
+header, aside nav, table, pre {
+  // margin-left: 2rem;
+  // margin-right: 2rem;
 }
 
 header {
-  padding-top: 4rem;
-  font-size: 1.4rem;
-  height: 1.8rem;
-  line-height: 1.8rem;
+  position: relative;
 }
 
 nav {
@@ -260,39 +270,43 @@ div {
 }
 
 blockquote {
-  border-left: .5rem solid @brand;
-  padding-left: 1.5rem;
+  // The rounding is to get around floating point substraction issues
+  @borderWidth: round(@spacingUnit / 3.8, 2);
+  border-left: @borderWidth solid @brand;
+  margin-left: -@spacingUnit;
+  padding-left: round(@spacingUnit - @borderWidth, 2);
   color: #666;
+
+  blockquote {
+    margin-left: 0;
+  }
 }
 
 .pullquote {
-  border: 0;
-  padding-left: 2rem;
-  text-align: center;
-}
-
-.pullquote:before {
-  content: "\201C";
-  // position: absolute;
-  // top: 0;
-  display: block;
-  height: .7em;
-  font-size: 3.6em;
-  color: @brand;
-}
-
-main blockquote p {
   padding: 0;
-}
+  margin: 0;
+  border: 0;
+  text-align: center;
 
-main .pullquote p {
-  font-size: 1.2em;
-  font-style: italic;
+  &:before {
+    content: "\201C";
+    // position: absolute;
+    // top: 0;
+    display: block;
+    height: .7em;
+    font-size: 3.6em;
+    color: @brand;
+  }
+
+  p {
+    font-size: 1.2em;
+    font-style: italic;
+  }
 }
 
 footer {
   border-top: 1px solid @darkGrey;
-  background: @lightGrey;
+  background: @footerBackgroundColor;
   padding: 4rem 0 2rem;
   // font-size: .8em;
 }
@@ -302,20 +316,16 @@ small {
 }
 
 time {
+  position: absolute;
+  top: -2rem;
   font-size: 1.4rem;
   color: #BBB;
-  /*text-transform: uppercase;*/
-  display: block;
-}
-
-.home:after {
-  content: "*";
-  color: @brand;
 }
 
 .section:before {
-  content: "/ ";
+  content: "/";
   color: #AAA;
+  margin: 0 .3em;
 }
 
 #btn {
@@ -323,10 +333,10 @@ time {
   position: absolute;
   background: @black;
   box-shadow: 0 0 0 .1rem rgba(red(@white), green(@white), blue(@white), .6);
-  border-radius: 2px;
+  border-radius: @lineWidth * 2;
   width: 1rem;
   height: 3rem;
-  margin: 2rem;
+  margin: @spacingUnit;
   right: 0;
   z-index: 1;
 
@@ -348,32 +358,41 @@ time {
   .translate();
 }
 
+// Section logo
+.sec {
+  display: inline-block;
+  background: @black;
+  border-radius: @lineWidth * 2;
+
+  &:before {
+    content: "";
+    display: block;
+    background: @white;
+    width: .5rem; // .33em;
+    height: .5rem; // .33em;
+    border-radius: 50%;
+    margin: .5rem; // .33em;
+  }
+}
+
 @media (min-width: 1024px) {
   html {
     font-size: 12px;
   }
 }
 
-pre {
-  background: #F9F8F7;
-  border-top: 1px solid @darkGrey;
-  border-bottom: 1px solid @darkGrey;
-}
-
 code {
   // We are only loading the regular font. We don’t want the browser to auto-generate other weights or styles.
   font: normal 400 .9em "Source Code Pro", Monaco, "Lucida Console", "Ubuntu Mono", Consolas, monospace;
-  border: 1px solid @darkGrey;
-  background: #F9F8F7;
+  border: @lineWidth solid @darkGrey;
+  background: @codeBackgroundColor;
   padding: 0 .2rem;
-  border-radius: 2px;
+  // border-radius: 2px;
 }
 
 pre code {
   display: block;
-  border: 0;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding: 1em (@spacingUnit - @lineWidth);
   overflow: auto;
 }
 
@@ -473,30 +492,13 @@ pre .coffeescript .property {
   color: @brand;
 }
 
-strong,
-/*pre .keyword,
-pre .id,
-pre .title,
-pre .built_in,
-pre .aggregate,
-pre .css .tag,
-pre .javadoctag,
-pre .phpdoc,
-pre .yardoctag,
-pre .smalltalk .class,
-pre .winutils,
-pre .bash .variable,
-pre .apache .tag,
-pre .go .typename,
-pre .tex .command,
-pre .strong,
-pre .request,
-pre .status*/ {
+strong, th, h1, h2, h3, h4 {
   font-weight: bold;
 }
 
-h1 + p, em {
+header + p, em {
   font-style: italic;
+  font-size: 1.1em;
 }
 
 pre .coffeescript .javascript,

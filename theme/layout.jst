@@ -27,9 +27,8 @@
 
   <section>
     <aside>
-      <header>
-      </header>
       <h2><a class="home" href="<%= root.rel %>" title="Home"><%= root.title %></a><% if ((ancestor = ancestors[1]) && ancestor.children) { %><small class="section"><a href="<%= ancestor.rel %>" title="Go to <%= ancestor.title %>"><%= ancestor.title %></a></small><% } %></h2>
+      <hr />
       <nav>
         <% root.children.forEach(function(section) { if (section.children) { %>
           <h5><a href="<%= section.rel %>"><%= section.title %></a></h5>
@@ -54,6 +53,7 @@
         <% }) %>
         </div>
         <% if (pages[0].date) { %>
+        <hr />
         <h4>Recent</h4>
         <ul>
         <% for (var i = 0; i < 3; i++) if (pages[i] && pages[i].date) { %>
@@ -69,33 +69,33 @@
   </section>
 
   <main>
+    <% if (cover) { %>
+      <figure><img src="<%= cover.src %>" alt="<%= cover.alt %>"/></figure>
+    <% } %>
     <article>
-      <% if (cover) { %>
-        <figure><img src="<%= cover.src %>" alt="<%= cover.alt %>"/></figure>
-      <% } %>
       <header>
         <% if (date) { %>
         <time datetime="<%= dateFormat(date, 'yyyy-mm-dd') %>"><%= dateFormat(date, 'mmmm d, yyyy') %></time>
         <% } %>
+        <h1><%= title %></h1>
       </header>
       <%= body %>
-      <% if (is('index')) { %>
-      <hr />
-      <nav>
-          <% children.forEach(function(page) { %>
-          <div>
-            <% if (page.date) { %>
-            <time datetime="<%= dateFormat(page.date, 'yyyy-mm-dd') %>"><%= dateFormat(page.date, 'mmmm d, yyyy') %></time>
-            <% } %>
-            <h3><a href="<%= page.rel %>"><%= page.title %></a></h3>
-            <p><%= page.description %></p>
-          </div>
-          <% }) %>
-      </nav>
-      <% } %>
-      <footer><p>Built with <a title="<%=pkg.name + ' v' + pkg.version%>" href="<%=pkg.homepage%>"><strong><%=pkg.title%></strong></a></p></footer>
     </article>
-
+    <% if (is('index')) { %>
+    <hr />
+    <nav>
+        <% children.forEach(function(page) { %>
+        <div>
+          <% if (page.date) { %>
+          <time datetime="<%= dateFormat(page.date, 'yyyy-mm-dd') %>"><%= dateFormat(page.date, 'mmmm d, yyyy') %></time>
+          <% } %>
+          <h3><a href="<%= page.rel %>"><%= page.title %></a></h3>
+          <p><%= page.description %></p>
+        </div>
+        <% }) %>
+    </nav>
+    <% } %>
+    <footer><p>Built with <a title="<%=pkg.name + ' v' + pkg.version%>" href="<%=pkg.homepage%>"><span class="sec"></span><strong><%=pkg.title%></strong></a></p></footer>
   </main>
 
   <script>
