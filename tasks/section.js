@@ -72,6 +72,7 @@ module.exports = function(grunt) {
       title: '',
       description: '',
       body: '',
+      words: 0,
       date: 0,
       author: false,
       cover: false,
@@ -168,6 +169,7 @@ module.exports = function(grunt) {
           var attrs = {
                 title: $('h1').first().text(),
                 description: $('h1+p').first().text(),
+                words: $.root().text().split(/\s+/).length,
                 src: filepath
               };
 

@@ -25,84 +25,80 @@
 
   <span id="btn"></span>
 
-  <section>
-    <aside>
-      <h2><a class="home" href="<%= root.rel %>" title="Home"><%= root.title %></a><% if ((ancestor = ancestors[1]) && ancestor.children) { %><small class="section"><a href="<%= ancestor.rel %>" title="Go to <%= ancestor.title %>"><%= ancestor.title %></a></small><% } %></h2>
-      <hr />
-      <nav>
-        <% root.children.forEach(function(section) { if (section.children) { %>
-          <h5><a href="<%= section.rel %>"><%= section.title %></a></h5>
-        <% }}) %>
-        <div>
-        <% if (is('index')) children.forEach(function(item) { %>
-          <% if (item.children) { if (page != root) { %>
-          <h5><a href="<%= item.rel %>"><%= item.title %></a></h5>
-          <ul>
-            <% item.children.forEach(function(subitem) { %>
-            <li>
-              <% if (subitem.date) { %>
-              <time datetime="<%= dateFormat(subitem.date, 'yyyy-mm-dd') %>"><%= dateFormat(subitem.date, 'mmmm d, yyyy') %></time>
-              <% } %>
-              <a href="<%= subitem.rel %>"><%= subitem.title %></a>
-            </li>
-            <% }) %>
-          </ul>
-          <% }} else { if (!item.date) { %>
-          <h6><a href="<%= item.rel %>"><%= item.title %></a></h6>
-          <% }} %>
-        <% }) %>
-        </div>
-        <% if (pages[0].date) { %>
-        <hr />
-        <h4>Recent</h4>
-        <ul>
-        <% for (var i = 0; i < 3; i++) if (pages[i] && pages[i].date) { %>
-        <li>
-          <time datetime="<%= dateFormat(pages[i].date, 'yyyy-mm-dd') %>"><%= dateFormat(pages[i].date, 'mmmm d, yyyy') %></time>
-          <a href="<%= pages[i].rel %>"><%= pages[i].title %></a>
-        </li>
-        <% } %>
-        </ul>
-        <% } %>
-      </nav>
-    </aside>
-  </section>
+  <aside>
+    <section>
+      <%
+        var sections = root.children.filter(function(child) {
+          return child.title && child.children;
+        });
+      %>
+      <% if (sections.length) { %>
+        <nav>
+          <% sections.forEach(function(section) { %>
+          <a href="<%= section.rel %>" <%= section == ancestors[1] && 'class="active"' || '' %>><%= section.title %></a>
+          <% }) %>
+        </nav>
+      <% } %>
+
+      <h2><a class="home" href="<%= root.rel %>" title="Home"><%= root.title %></a></h2>
+
+      <%
+        var subpages = page.children && page.children.filter(function(child) {
+          return child.title && !child.date && (!child.children || page != root);
+        }) || [];
+      %>
+      <% if (subpages.length) { %>
+        <hr /><h5>Navigation</h5>
+        <% subpages.forEach(function(subpage) { %>
+          <h4><a href="<%= subpage.rel %>"><%= subpage.title %></a></h4>
+        <%  }); %>
+      <% } %>
+
+      <% if (pages[0].date) { %>
+      <hr /><h5>Recent</h5>
+      <% for (var i = 0; i < 3; i++) if (pages[i] && pages[i].date) { %>
+        <h4><a href="<%= pages[i].rel %>" title="Published <%= dateFormat(pages[i].date, 'mmmm d, yyyy') %>"><%= pages[i].title %></a></h4>
+      <% } %>
+      <% } %>
+    </section>
+  </aside>
 
   <main>
     <% if (cover) { %>
       <figure><img src="<%= cover.src %>" alt="<%= cover.alt %>"/></figure>
     <% } %>
-    <article>
+    <section>
       <header>
         <% if (date) { %>
-        <time datetime="<%= dateFormat(date, 'yyyy-mm-dd') %>"><%= dateFormat(date, 'mmmm d, yyyy') %></time>
+        <time datetime="<%= dateFormat(date, 'yyyy-mm-dd') %>"><%= dateFormat(date, 'mmmm d, yyyy') %> • <%= Math.ceil(words/200) %> minute read</time>
         <% } %>
         <h1><%= title %></h1>
       </header>
       <%= body %>
-    </article>
+    </section>
     <% if (is('index')) { %>
     <hr />
-    <nav>
-        <% children.forEach(function(page) { %>
-        <div>
-          <% if (page.date) { %>
-          <time datetime="<%= dateFormat(page.date, 'yyyy-mm-dd') %>"><%= dateFormat(page.date, 'mmmm d, yyyy') %></time>
-          <% } %>
-          <h3><a href="<%= page.rel %>"><%= page.title %></a></h3>
-          <p><%= page.description %></p>
-        </div>
-        <% }) %>
-    </nav>
+    <section>
+      <% children.forEach(function(page) { if (page.title && page.description) { %>
+      <div>
+        <% if (page.date) { %>
+        <time datetime="<%= dateFormat(page.date, 'yyyy-mm-dd') %>"><%= dateFormat(page.date, 'mmmm d, yyyy') %></time>
+        <% } %>
+        <h3><a href="<%= page.rel %>"><%= page.title %></a></h3>
+        <p><%= page.description %></p>
+      </div>
+      <% }}) %>
+    </section>
     <% } %>
-    <footer><p>Built with <a title="<%=pkg.name + ' v' + pkg.version%>" href="<%=pkg.homepage%>"><span class="sec"></span><strong><%=pkg.title%></strong></a></p></footer>
+    <footer>
+      <section>
+        <p class="center"><a class="section" title="Built with <%=pkg.name + ' v' + pkg.version%>" href="<%=pkg.homepage%>"><span></span><strong><%=pkg.title%></strong></a></p>
+      </section>
+    </footer>
   </main>
 
   <script>
     /(iPad|iPhone|iPod)/g.test(navigator.userAgent) && document.documentElement.classList.add('ios');
-    // document.getElementById('btn').onclick = function() {
-    //   document.body.className = document.body.className ? '' : 'open';
-    // };
   </script>
 </body>
 </html>
