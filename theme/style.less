@@ -95,8 +95,8 @@ main {
 
 section {
   max-width: @maxContentWidth;
-  padding: @spacingUnit;
-  margin: (7rem - @spacingUnit) auto;
+  padding: 0 @spacingUnit;
+  margin: 7rem auto;
 }
 
 aside {
@@ -145,7 +145,7 @@ aside {
 }
 
 nav {
-  margin: (-@spacingUnit) 0 @spacingUnit;
+  margin-bottom: @spacingUnit;
   box-shadow: inset 0 (-@lineWidth) lighten(@black, 12);
   color: lighten(@black, 20);// darken(@darkGrey, 12);
   white-space: nowrap;
