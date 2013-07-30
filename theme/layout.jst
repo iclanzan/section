@@ -43,16 +43,43 @@
       <h2><a class="home" href="<%= root.rel %>" title="Home"><%= root.title %></a></h2>
 
       <%
+        var navigation = '';
+        (function recurse(p) {
+          var items = (p && p.children || []).filter(function (item) {
+            return item.title && !item.date;
+          });
+
+          if (items.length) {
+            navigation += '<ul>';
+            items.forEach(function(item) {
+              navigation += '<li><h4><a href="' + item.rel + '" ' + (item == page && 'class="active"' || '') + '>' + item.title + '</a></h4>';
+
+              if (~ancestors.indexOf(item)) {
+                recurse(item);
+              }
+
+              navigation += '</li>';
+            });
+            navigation += '</ul>';
+          }
+        })(ancestors[1]);
+      %>
+
+      <% if (navigation) { %>
+        <hr /><h5>Navigation</h5>
+        <%= navigation %>
+      <% } else {
+
         var subpages = page.children && page.children.filter(function(child) {
           return child.title && !child.date && (!child.children || page != root);
         }) || [];
-      %>
-      <% if (subpages.length) { %>
+
+        if (subpages.length) { %>
         <hr /><h5>Navigation</h5>
         <% subpages.forEach(function(subpage) { %>
           <h4><a href="<%= subpage.rel %>"><%= subpage.title %></a></h4>
         <%  }); %>
-      <% } %>
+      <% }} %>
 
       <% if (pages[0].date) { %>
       <hr /><h5>Recent</h5>

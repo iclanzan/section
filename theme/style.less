@@ -118,7 +118,7 @@ aside {
           user-select: none;
 
   section {
-    margin: 0;
+    margin: 0 0 @spacingUnit;
   }
 
   hr {
@@ -129,7 +129,7 @@ aside {
   a {
     display: block;
 
-    &:hover {
+    &:hover, &.active {
       color: @white;
     }
   }
@@ -138,8 +138,16 @@ aside {
     padding: (@spacingUnit / 2) @spacingUnit;
     margin: 0 (-@spacingUnit) 0 (-@spacingUnit);
 
-    &:hover {
+    &:hover , &.active {
       background: lighten(@black, 6);
+    }
+  }
+
+  ul ul {
+    margin-left: @spacingUnit;
+
+    a {
+      font-weight: 400;
     }
   }
 }
@@ -168,7 +176,7 @@ nav {
   }
 }
 
-p, ol, ul, pre, table {
+p, main ol, main ul, pre, table {
   margin: .2em 0 1.5em;
 }
 
@@ -261,11 +269,6 @@ hr {
 
 ol, ul {
   list-style: none;
-}
-
-aside li {
-  margin-bottom: 2rem;
-  line-height: 1;
 }
 
 main ol {
